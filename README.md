@@ -25,7 +25,7 @@ O sistema é dividido em três módulos principais: Cadastro de Clientes, Cadast
 O programa segue as especificações detalhadas no exercício proposto.
 
 ### 1. Gestão de Clientes
-* **Incluir Cliente:** Adiciona um novo cliente (código e nome). O sistema valida para não permitir códigos de cliente repetidos[cite: 152].
+* **Incluir Cliente:** Adiciona um novo cliente (código e nome). O sistema valida para não permitir códigos de cliente repetidos.
 * **Excluir Cliente:** Remove um cliente pelo código, após solicitar confirmação.
 * **Alterar Cliente:** Permite a modificação do nome de um cliente existente com base no seu código.
 
