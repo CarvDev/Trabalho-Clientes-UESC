@@ -1,4 +1,4 @@
-# Sistema de Ponto de Venda (PDV) - Projeto em C
+# Sistema de Ponto de Venda - Projeto em C
 
 ---
 
