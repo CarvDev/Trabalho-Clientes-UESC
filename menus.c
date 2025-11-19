@@ -27,9 +27,9 @@ int obter_opcao() {
 
 void mostra_menu_principal() {
     printf("Digite a opcao desejada:\n"
-        " 1. Gerenciar Clientes\n"
-        " 2. Gerenciar Produtos\n"
-        " 3. Efetuar Venda\n"
+        " 1. Cadastro de Produtos\n"
+        " 2. Cadastro de Clientes\n"
+        " 3. Venda\n"
         " 4. Sair do Sistema\n"
     );
 }
@@ -39,5 +39,7 @@ void mostra_menu_clientes() {
     "1. Incluir Cliente\n"
     "2. Excluir Cliente\n"
     "3. Alterar Cliente\n"
+    "4. Mostrar Cadastro de Clientes\n"
+    "5. Retornar\n"
     );
 }

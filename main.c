@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <locale.h>
 #include "menus.h"
+#include "auxiliar.h"
 
 int main(void) {
     setlocale(LC_ALL, "pt_BR.UTF-8"); // para usar acentos, etc.
@@ -13,7 +14,31 @@ int main(void) {
         switch (opcao_principal)
         {
             case 1:
+                limpar_tela(0);
                 mostra_menu_clientes();
+                int opcao_clientes = obter_opcao();
+                switch (opcao_clientes)
+                {
+                case 1:
+                    // opção 1: incluir clientes
+                    break;
+                case 2:
+                    // opção 2: excluir clientes
+                    break;
+                case 3:
+                    // opção 3: alterar clientes
+                    break;
+                case 4:
+                    // opção 4: mostrar cadastro de clientes
+                    break;
+                case 5:
+                    // opção 5: retornar
+                    break;
+                    
+                default:
+                    printf("[Opção inválida]\nTente novamente...\n\n");
+                    break;
+                }
 
                 // implementar opção 1 (Gerenciar Clientes)
 
