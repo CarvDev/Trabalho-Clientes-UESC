@@ -6,15 +6,6 @@
 #include "produtos.h"
 #include "vendas.h"
 
-// acho melhor deixar os structs aqui, globalmente
-typedef struct Clientes
-{
-    
-    int codigo;
-    char clientes[30];
-
-} Clientes;
-
 int main(void) {
     // funções básicas para o funcionamento do programa:
     setlocale(LC_ALL, "pt_BR.UTF-8"); // para usar acentos, etc.

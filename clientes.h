@@ -1,6 +1,14 @@
 #ifndef CLIENTES_H
 #define CLIENTES_H
 
+typedef struct Clientes
+{
+    
+    int codigo;
+    char clientes[30];
+
+} Clientes;
+
 void executar_modulo_clientes(void);
 /* 
 Esse módulo inicia um do-while, que limpa a tela, imprime o menu de clientes, 
