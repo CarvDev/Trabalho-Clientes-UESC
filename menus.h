@@ -4,8 +4,9 @@
 // solicita uma opção para o usuário e a retorna
 int obter_opcao();
 
-// imprime o menu principal
+// imprime os menus
 void mostra_menu_principal();
+void mostra_menu_clientes();
 
 
 #endif

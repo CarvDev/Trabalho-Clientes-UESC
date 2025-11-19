@@ -33,3 +33,11 @@ void mostra_menu_principal() {
         " 4. Sair do Sistema\n"
     );
 }
+
+void mostra_menu_clientes() {
+    printf("Digite a opção desejada:\n"
+    "1. Incluir Cliente\n"
+    "2. Excluir Cliente\n"
+    "3. Alterar Cliente\n"
+    );
+}

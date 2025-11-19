@@ -13,6 +13,8 @@ int main(void) {
         switch (opcao_principal)
         {
             case 1:
+                mostra_menu_clientes();
+
                 // implementar opção 1 (Gerenciar Clientes)
 
                 // minha ideia:    
