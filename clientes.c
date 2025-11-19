@@ -4,7 +4,7 @@
 #include "auxiliar.h"
 #include "menus.h"
 
-void executar_modulo_clientes() {
+void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
     int opcao;
     do {
         limpar_tela(0);

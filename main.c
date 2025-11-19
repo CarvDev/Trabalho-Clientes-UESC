@@ -6,11 +6,18 @@
 #include "produtos.h"
 #include "vendas.h"
 
+#define MAX_CLIENTES 100
+#define MAX_PRODUTOS 100
+#define MAX_VENDAS 500
+
 int main(void) {
     // funções básicas para o funcionamento do programa:
     setlocale(LC_ALL, "pt_BR.UTF-8"); // para usar acentos, etc.
 
     // declarando variáveis para a main:
+    Cliente lista_clientes[MAX_CLIENTES];
+    int qtd_clientes = 0;
+
     int opcao;
 
     // iniciando interação com o usuário:
@@ -22,7 +29,7 @@ int main(void) {
         {
             case 1:
                 // Cadastro de Clientes
-                executar_modulo_clientes(); // informações sobre o módulo em "clientes.h"
+                executar_modulo_clientes(lista_clientes, &qtd_clientes , MAX_CLIENTES); // informações sobre o módulo em "clientes.h"
                 break;
             case 2:
                 //Cadastro de Produtos
