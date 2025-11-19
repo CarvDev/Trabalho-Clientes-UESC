@@ -1,65 +1,57 @@
 #include <stdio.h>
 #include <locale.h>
+#include "clientes.h"
 #include "menus.h"
 #include "auxiliar.h"
+#include "produtos.h"
+#include "vendas.h"
+
+// acho melhor deixar os structs aqui, globalmente
+typedef struct Clientes
+{
+    
+    int codigo;
+    char clientes[30];
+
+} Clientes;
 
 int main(void) {
+    // funções básicas para o funcionamento do programa:
     setlocale(LC_ALL, "pt_BR.UTF-8"); // para usar acentos, etc.
-    // declarando variáveis globais:
-    int opcao_principal;
-    int opcao_clientes;
 
+    // declarando variáveis para a main:
+    int opcao;
+
+    // iniciando interação com o usuário:
     do {
-        mostra_menu_principal();
-        opcao_principal = obter_opcao();
-        switch (opcao_principal)
+        limpar_tela(0);
+        imprimir_menu_principal();
+        opcao = obter_opcao();
+        switch (opcao)
         {
             case 1:
-                do
-                {
-                    limpar_tela(0);
-                    mostra_menu_clientes();
-                    opcao_clientes = obter_opcao();
-                    switch (opcao_clientes)
-                    {
-                        case 1:
-                            // Incluir Cliente
-                            break;
-                        case 2:
-                            // Excluir Cliente
-                            break;
-                        case 3:
-                            // Alterar Cliente
-                            break;
-                        case 4:
-                            // Mostrar Cadastro de Clientes
-                            break;
-                        case 5:
-                            // Retornar
-                            break;
-                        default:
-                            printf("[Opção inválida]\nTente novamente...\n\n");
-                            break;
-                    }
-                } while (opcao_clientes != 5);
+                // Cadastro de Clientes
+                executar_modulo_clientes(); // informações sobre o módulo em "clientes.h"
                 break;
             case 2:
-                // implementar opção 2 (Cadastro de Produtos)
-
+                //Cadastro de Produtos
+                executar_modulo_produtos(); // ainda vazio, não há menu de produtos pronto para exibir
                 break;
             case 3:
-                // implementar opção 3 (Venda)
-
+                // Venda
+                executar_modulo_vendas(); // ainda vazio, não há menu de vendas pronto para exibir
                 break;
             case 4:
+                // Sair do Sistema
                 printf("[Fim do Programa]\n\n");
                 break;
-            default:     
+            default:
+                // Caso de erro (opção inválida)
                 printf("[Opção inválida]\nTente novamente...\n\n");
                 break;
         }
     }
-    while (opcao_principal != 4);
+    while (opcao != 4);
     
     return 0;   
 }
