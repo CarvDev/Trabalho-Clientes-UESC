@@ -27,8 +27,8 @@ int obter_opcao() {
 
 void mostra_menu_principal() {
     printf("Digite a opcao desejada:\n"
-        " 1. Cadastro de Produtos\n"
-        " 2. Cadastro de Clientes\n"
+        " 1. Cadastro de Clientes\n"
+        " 2. Cadastro de Produtos\n"
         " 3. Venda\n"
         " 4. Sair do Sistema\n"
     );
