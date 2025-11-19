@@ -1,11 +1,12 @@
 #ifndef CLIENTES_H
 #define CLIENTES_H
+#define TAMANHO 30
 
-typedef struct Clientes
+typedef struct Cliente
 {
     
-    int codigo;
-    char clientes[30];
+    unsigned int CodigoClientes;
+    char NomeClientes[TAMANHO];
 
 } Cliente;
 
