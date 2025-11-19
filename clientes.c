@@ -23,7 +23,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
                 printf("Insira o código do cliente: \n");
 
-                scanf("%u", lista[*qtd] -> CodigoClientes);
+                scanf("%u", &lista[*qtd].CodigoClientes);
 
                 (*qtd)++;
 
