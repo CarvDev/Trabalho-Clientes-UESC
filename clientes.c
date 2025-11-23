@@ -42,9 +42,8 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
                 break;
 
             case 4:
-
-                // Mostrar Cadastro de Clientes
-
+                //MOSTRAR CADASTRO DE CLIENTES;
+                limpar_tela(0);
                 break;
 
             case 5:
@@ -63,3 +62,4 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
     } while (opcao != 5);
 
 }
+
