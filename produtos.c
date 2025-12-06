@@ -18,7 +18,6 @@ static int buscar_indice_produto(int codigo) {
 
 void inicializar_produtos() {
     if (!dados_carregados) {
-        // Usa a sua função genérica do auxiliar.c
         total_produtos = carregar("produtos.txt", lista_produtos, Maximo_Produto, sizeof(Produto), ler_produto_item);
         dados_carregados = 1;
     }
