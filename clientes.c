@@ -109,29 +109,86 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
                     if(lista[i].CodigoClientes == codigoAlterar){
 
-                        indiceEncontrado = i;
+                        indiceParaAlterar = i;
 
                     }
                 }
 
                 if(indiceParaAlterar != -1){
 
-                    printf("Código de cliente encontrado com sucesso!!Insira novos dados: \n");
+                    printf("\nCLIENTE ENCONTRADO!\n");
 
                     // inserir novos dados
 
+                    printf("Nome atual: %s\n", lista[indiceParaAlterar].NomeClientes);
+
+                    printf("\nDigite o nome do novo cliente: \n");
+
+                    scanf(" %[^\n]", lista[indiceParaAlterar].NomeClientes);
+
+                    char opção;
+
+                    printf("Deseja alterar o código do cliente? Digite (S/N).\n");
+
+                    scanf(" %c", &opção);
+
+                    if(opção == 's' || opção == 'S'){
+
+                        printf("Digite o novo código: \n");
+
+                        scanf("%u", &lista[indiceParaAlterar].CodigoClientes);
+
+                        printf("Código atualizado com sucesso!\n");
+
+                    } else {
+
+                        printf("O código foi mantido.\n");
+                    }
+
+                    printf("Dados alterados com sucesso!\n");
                 }
-                
+
                 break;
 
             case 4:
                 //MOSTRAR CADASTRO DE CLIENTES;
                 limpar_tela(0);
+
+                printf("========= LISTAGEM DE CLIENTES =========\n\n");
+
+                if(*qtd == 0){
+
+                    printf("Nenhum cliente cadastrado no sistema. \n");
+
+                } else {
+
+                    printf("%-10s | %s\n", "CODIGO", "NOME DO CLIENTE");
+
+                    printf("--------------------------------------------\n");
+
+                    for(int i = 0; i < *qtd; i++) {
+
+                        printf("%-10u | %s\n", lista[i].CodigoClientes, lista[i].NomeClientes);
+                        
+                    }
+
+                }
+
+                printf("\n========================================\n");
+
+                printf("Pressione ENTER para voltar ao menu...");
+
+                getchar();
+
+                getchar();
+
                 break;
 
             case 5:
             
                 //retornar
+
+                printf("Retornando ao menu principal...\n");
 
                 break;
 
