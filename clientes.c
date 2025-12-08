@@ -76,7 +76,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
                 } else{
 
-                    printf("Cliente não encontrado.\n");
+                    printf("Cliente não encontrado!\n");
 
                 }
 
