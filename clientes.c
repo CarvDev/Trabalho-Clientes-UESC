@@ -33,7 +33,55 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
                 // Excluir Cliente
 
-                break;
+                if (*qtd == 0){
+
+                    printf("A lista está vazia! \n");
+
+                    getchar();
+                    
+                    break;
+
+                }
+
+                int codigoRemover;
+                int indiceEncontrado = -1; // significa que não achou nada.
+
+                printf("Indique o código do cliente para ser removido: \n");
+
+                scanf("%u", &codigoRemover);
+
+                // Procurar se o cliente está cadastrado
+
+                for(int i = 0; i < *qtd; i++){
+
+                    if(lista[i].CodigoClientes == codigoRemover){
+
+                        indiceEncontrado = i;
+
+                        break;
+                    }
+                }
+
+                if(indiceEncontrado != -1){
+
+                    for(int i = indiceEncontrado; i < *qtd - 1; i--){
+
+                        lista[i] = lista[i + 1];
+
+                    }
+
+                    (*qtd)--;
+
+                    printf("Cliente removido com sucesso!\n");
+
+                } else{
+
+                    printf("Cliente não encontrado.\n");
+
+                }
+
+
+                 break;
 
             case 3:
 
