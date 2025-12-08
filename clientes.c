@@ -64,7 +64,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
                 if(indiceEncontrado != -1){
 
-                    for(int i = indiceEncontrado; i < *qtd - 1; i--){
+                    for(int i = indiceEncontrado; i < *qtd - 1; i++){
 
                         lista[i] = lista[i + 1];
 
@@ -87,6 +87,41 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
                 // Alterar Cliente
 
+                if(*qtd == 0){
+
+                    printf("A quantidade está vazia!\n");
+
+                    getchar();
+
+                    getchar();
+                }
+
+                int codigoAlterar;
+                int indiceParaAlterar = -1;
+
+                printf("Digite o código do cliente que deseja alterar: \n");
+
+                scanf("%u", &codigoAlterar);
+
+                // buscar o cliente
+
+                for(int i = 0; i < *qtd; i++){
+
+                    if(lista[i].CodigoClientes == codigoAlterar){
+
+                        indiceEncontrado = i;
+
+                    }
+                }
+
+                if(indiceParaAlterar != -1){
+
+                    printf("Código de cliente encontrado com sucesso!!Insira novos dados: \n");
+
+                    // inserir novos dados
+
+                }
+                
                 break;
 
             case 4:
