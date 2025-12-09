@@ -75,12 +75,18 @@ void inserir_produto() {
 }
 
 void excluir_produto() {
+    if (total_produtos == 0) {
+        printf("Nenhum produto cadastrado no sistema.\n");
+        limpar_tela(1);
+        return;
+    }
     int codigo;
     printf("==========================================\n");
     printf("           *  EXCLUIR PRODUTO  *          \n");
     printf("==========================================\n");
     printf("Digite o codigo para excluir o produto: ");
     scanf("%d", &codigo);
+    limpar_buffer();
 
     int index;
 
@@ -102,6 +108,12 @@ void excluir_produto() {
 }
 
 void alterar_produto() {
+    if (total_produtos == 0) {
+        printf("Nenhum produto cadastrado no sistema.\n");
+        limpar_tela(1);
+        return;
+    }
+    
     int codigo;
     printf("==========================================\n");
     printf("           *  ALTERAR PRODUTO  *          \n");
@@ -120,6 +132,7 @@ void alterar_produto() {
 
         printf("Digite o novo preco: ");
         scanf("%f", &lista_produtos[index].preco_produto);
+        limpar_buffer();
         
         salvar_produtos();
         printf("Produto foi atualizado!\n");

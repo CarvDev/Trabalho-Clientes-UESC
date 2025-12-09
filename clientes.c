@@ -1,4 +1,4 @@
-#include "clientes.h"
+    #include "clientes.h"
 #include <stdio.h>
 #include "auxiliar.h"
 #include "menus.h"
@@ -60,26 +60,26 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
                 lista[*qtd].CodigoClientes = codigoTemp;
                 printf("Insira o nome do cliente: \n");
-                scanf(" %s[^\n]", lista[*qtd].NomeClientes);
-                limpar_buffer();
-                persistir_clientes(lista, *qtd + 1);
+                fgets(lista[*qtd].NomeClientes, TAMANHO_NOME, stdin);
                 printf("Cliente cadastrado com sucesso!\n");
                 limpar_tela(1);
                 (*qtd)++;
+
+                persistir_clientes(lista, *qtd);
                 break;
             }
-
+            
             case 2: {
                 // Excluir Cliente
                 printf("==========================================\n");
                 printf("            *  EXCLUIR CLIENTE  *         \n");
-                printf("==========================================\n");
+                printf("==========================================\n");                
                 if (*qtd == 0) {
                     printf("A lista esta vazia! \n");
                     limpar_tela(1);
                     break;
                 }
-
+                
                 unsigned int codigoRemover;
                 int indiceEncontrado = -1;
 
@@ -100,15 +100,16 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                     }
 
                     (*qtd)--;
-
+                    
                     printf("Cliente removido com sucesso!\n");
                     limpar_tela(1);
+                    persistir_clientes(lista, *qtd);
                     
                 } else {
                     printf("Cliente nao encontrado!\n");
                     limpar_tela(1);
                 }
-
+                
                 break;
             }
 
@@ -124,14 +125,14 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                     limpar_tela(1);
                     break;
                 }
-
+                
                 unsigned int codigoAlterar;
                 int indiceParaAlterar = -1;
-
-                printf("Digite o codigo do cliente que deseja alterar: \n");
+                
+                printf("Digite o código do cliente que deseja alterar: \n");
                 scanf("%u", &codigoAlterar);
                 limpar_buffer();
-
+                
                 for(int i = 0; i < *qtd; i++){
                     if(lista[i].CodigoClientes == codigoAlterar){
                         indiceParaAlterar = i;
@@ -141,26 +142,31 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
                 if(indiceParaAlterar != -1){
                     printf("\nCLIENTE ENCONTRADO!\n");
-
+                    
                     printf("Nome atual: %s\n", lista[indiceParaAlterar].NomeClientes);
                     printf("Digite o novo nome: \n");
-
-                    scanf(" %s[^\n]", lista[indiceParaAlterar].NomeClientes);
-                    limpar_buffer();
                     
+                    fgets(lista[indiceParaAlterar].NomeClientes, TAMANHO_NOME, stdin);
+                    
+                    printf("Nome atualizado!\n");
+
                     char op;
                     printf("Deseja alterar o codigo? (S/N): ");
                     scanf(" %c", &op);
                     
                     if(op == 's' || op == 'S'){
-                        printf("Digite o novo codigo: \n");
-                        scanf("%u", &lista[indiceParaAlterar].CodigoClientes);
+                        unsigned int novoCodigoTemp;
+                        printf("Digite o novo código: \n");
+                        scanf("%u", &novoCodigoTemp);
                         limpar_buffer();
-                        printf("Codigo atualizado!\n");
+                        if (!cliente_existe(lista, novoCodigoTemp, *qtd)) {
+                            lista[*qtd].CodigoClientes = novoCodigoTemp;
+                            printf("Código atualizado!\n");
+                        } else printf("Já existe um outro cliente com esse código, portanto o código não foi alterado.\n");
                     }
 
-                    printf("Dados alterados com sucesso!\n");
                     limpar_tela(1);
+                    persistir_clientes(lista, *qtd);
                     
                 } else {
                     printf("Cliente nao encontrado!\n");
