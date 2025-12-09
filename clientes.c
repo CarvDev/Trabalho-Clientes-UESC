@@ -147,7 +147,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                         if (!cliente_existe(lista, novoCodigoTemp, *qtd)) {
                             lista[*qtd].CodigoClientes = novoCodigoTemp;
                             printf("Código atualizado!\n");
-                        } else printf("Já existe um outro cliente com esse código, portanto o código não  foi alterado.\n");
+                        } else printf("Já existe um outro cliente com esse código, portanto o código não foi alterado.\n");
                     }
 
                     limpar_tela(1);
