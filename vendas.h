@@ -35,4 +35,10 @@ void mensagem_finalizar_venda(void);
 /* Executar módulo de vendas */
 void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes);
 
+/* Visualizar vendas realizadas */
+void visualizar_vendas(void);
+
+/* Menu do módulo de vendas */
+void menu_vendas(Cliente *lista_clientes, int *qtd_clientes);
+
 #endif

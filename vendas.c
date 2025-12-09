@@ -20,6 +20,7 @@ void salvar_vendas(void) {
 void finalizar_vendas(Venda *venda){
     vendas[total_vendas] = *venda;
     vendas[total_vendas].CodigoVenda = total_vendas;
+    salvar_vendas();
     total_vendas++;
 }
 
@@ -63,6 +64,7 @@ void mensagem_finalizar_venda(){
 
 void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
 {
+    
     // verificar se há clientes cadastrados
     if (*qtd_clientes == 0) {
         printf("Nenhum cliente cadastrado no sistema!\n");
@@ -71,6 +73,13 @@ void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
         return;
     }
 
+    // verificar se há produtos cadastrados
+    if (obter_total_produtos() == 0) {
+        printf("Nenhum produto cadastrado no sistema!\n");
+        printf("Por favor, cadastre produtos antes de realizar vendas.\n");
+        limpar_tela(1);
+        return;
+    }
 
     unsigned int codigo_cliente_dado;
     int codigo_valido = -1;
@@ -87,7 +96,6 @@ void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
             printf("Entrada invalida! Digite um numero valido.\n");
             limpar_buffer();
             limpar_tela(1);
-            continue;
         }
 
         codigo_valido = encontrar_cliente(lista_clientes, *qtd_clientes, codigo_cliente_dado);
@@ -103,13 +111,6 @@ void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
             limpar_tela(1);
         }
     }
-    // verificar se há produtos cadastrados
-    if (obter_total_produtos() == 0) {
-        printf("Nenhum produto cadastrado no sistema!\n");
-        printf("Por favor, cadastre produtos antes de realizar vendas.\n");
-        limpar_tela(1);
-        return;
-    } 
 
     // inicia venda
     Venda venda_atual;
@@ -118,17 +119,15 @@ void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
 
     int indice_produto = -1;
 
-    while (1){
+    while (pedido != -1){
         printf("================================================\n");
         printf("              * Carrinho de compras *\n");
         printf("================================================\n");
 
         printf("Cliente: %s\n", lista_clientes[codigo_valido].NomeClientes);
         printf("Valor total atual: R$ %.2f\n\n", venda_atual.carrinho.PrecoTotal);
-
         // listar produtos
         visualizar_produtos();
-
         // pedir produto
         printf("\nDigite o codigo do produto para adicionar (ou -1 para finalizar): ");
         scanf("%d", &pedido);
@@ -178,4 +177,51 @@ void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
 
         limpar_tela(0);
     }
+}
+
+void visualizar_vendas() {
+    printf("\n=======================================\n");
+    printf("          LISTA DE VENDAS REALIZADAS          \n");
+    printf("=======================================\n\n");
+    for (int i = 0; i < total_vendas; i++) {
+        printf("Venda ID: %u | Cliente: %s | Total: R$ %.2f\n",
+               vendas[i].CodigoVenda,
+               vendas[i].cliente.NomeClientes,
+               vendas[i].carrinho.PrecoTotal);
+    }
+    printf("\n=======================================\n");
+    limpar_tela(1);
+}
+
+void menu_vendas(Cliente *lista_clientes, int *qtd_clientes) {
+    int opcao;
+    do {
+        limpar_tela(0);
+        printf("=== MODULO DE VENDAS ===\n");
+        printf("1. Realizar nova venda\n");
+        printf("2. Visualizar vendas realizadas\n");
+        printf("3. Retornar ao menu principal\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                executar_modulo_vendas(lista_clientes, qtd_clientes);
+                limpar_tela(1);
+                break;
+            case 2:
+                // Visualizar vendas realizadas
+                visualizar_vendas();
+                break;
+            case 3:
+                // Retornar ao menu principal
+                printf("Retornando ao menu principal...\n");
+                limpar_tela(1);
+                break;
+            default:
+                printf("[Opcao invalida]\nTente novamente...\n\n");
+                limpar_tela(1);
+                break;
+        }
+    } while (opcao != 3);
 }

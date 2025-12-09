@@ -161,7 +161,7 @@ int carregar(const char *nome_arquivo,void *vetor,int max_itens,int tamanho_item
 int ler_cliente_item(const char *linha, void *item) {
     Cliente *c = (Cliente *)item;
 
-    return sscanf(linha, "%u|%[^\n]",
+    return sscanf(linha, "%u|%29[^\n]",
                   &c->CodigoClientes,
                   c->NomeClientes) == 2;
 }
