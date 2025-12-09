@@ -159,7 +159,6 @@ void visualizar_produtos() {
         }
     }
     printf("=========================================\n");
-    limpar_tela(1);
 } 
 
 // --- MENU ---
