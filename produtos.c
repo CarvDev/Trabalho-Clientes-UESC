@@ -7,7 +7,7 @@ static Produto lista_produtos[Maximo_Produto];
 static int total_produtos = 0;
 static int dados_carregados = 0;
 
-static int buscar_indice_produto(int codigo) {
+int buscar_indice_produto(int codigo) {
     for (int i = 0; i < total_produtos; i++) {
         if (lista_produtos[i].codigo_produto == codigo) {
             return i;
@@ -16,11 +16,24 @@ static int buscar_indice_produto(int codigo) {
     return -1;
 }
 
+Produto *obter_produto_por_indice(int index) {
+    if (index < 0 || index >= total_produtos) return NULL;
+    return &lista_produtos[index];
+}
+
 void inicializar_produtos() {
     if (!dados_carregados) {
         total_produtos = carregar("produtos.txt", lista_produtos, Maximo_Produto, sizeof(Produto), ler_produto_item);
         dados_carregados = 1;
     }
+}
+
+int obter_total_produtos(void) {
+    return total_produtos;
+}
+
+void salvar_produtos() {
+    salvar("produtos.txt", lista_produtos, total_produtos, sizeof(Produto), salvar_produto_item);
 }
 
 void inserir_produto() {
@@ -53,7 +66,7 @@ void inserir_produto() {
     lista_produtos[total_produtos] = p;
     total_produtos++;
 
-    salvar_dados();
+    salvar_produtos();
     
     printf("\nProduto foi cadastrado e salvo com sucesso!\n");
     limpar_tela(1);
@@ -78,7 +91,7 @@ void excluir_produto() {
         }
         total_produtos--;
         
-        salvar_dados();
+        salvar_produtos();
         printf("Produto foi excluido com sucesso.\n");
     }
     limpar_tela(1);
@@ -102,7 +115,7 @@ void alterar_produto() {
         printf("Digite o novo preco: ");
         scanf("%f", &lista_produtos[index].preco_produto);
         
-        salvar_dados();
+        salvar_produtos();
         printf("Produto foi atualizado!\n");
     } else {
         printf("Produto nao foi encontrado.\n");
@@ -110,14 +123,19 @@ void alterar_produto() {
     limpar_tela(1);
 }
 
-void visualizar_produto() {
+void visualizar_produtos() {
      
-    printf("\n--------------- PRODUTOS ---------------n");
-    for (int i = 0; i < total_produtos; i++) {
-        printf("COD: %d | NOME: %s | R$ %.2f\n", 
-               lista_produtos[i].codigo_produto, 
-               lista_produtos[i].nome_produto, 
-               lista_produtos[i].preco_produto);
+    printf("\n--------------- PRODUTOS ---------------\n");
+    
+    if (total_produtos == 0) {
+        printf("Nenhum produto cadastrado no sistema.\n");
+    } else {
+        for (int i = 0; i < total_produtos; i++) {
+            printf("COD: %d | NOME: %s | R$ %.2f\n", 
+                   lista_produtos[i].codigo_produto, 
+                   lista_produtos[i].nome_produto, 
+                   lista_produtos[i].preco_produto);
+        }
     }
     printf("-------------------------\n");
     limpar_tela(1);
@@ -138,7 +156,7 @@ void executar_modulo_produtos() {
         printf("5. Voltar\n");
 
         opcao = obter_opcao();
-        opcao = 5;
+        
         switch (opcao)
         {
             case 1:
@@ -151,13 +169,13 @@ void executar_modulo_produtos() {
                 alterar_produto();
                 break;
             case 4:
-                visualizar_produto();
+                visualizar_produtos();
                 break;
             case 5:
                 break;
             default:
                 printf("[Opção inválida]\nTente novamente...\n\n");
-                impar_tela(1);
+                limpar_tela(1);
                 break;
         }
     } while (opcao != 5);

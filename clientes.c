@@ -4,7 +4,15 @@
 #include "auxiliar.h"
 #include "menus.h"
 
-void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
+void inicializar_clientes(Cliente *lista, int *qtd, int max) {
+    *qtd = carregar("clientes.txt", lista, max, sizeof(Cliente), ler_cliente_item);
+}
+
+void persistir_clientes(Cliente *lista, int qtd) {
+    salvar("clientes.txt", lista, qtd, sizeof(Cliente), salvar_cliente_item);
+}
+
+void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
     int opcao;
 
@@ -27,6 +35,8 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
                 (*qtd)++;
 
+                persistir_clientes(lista, *qtd);
+
                 break;
 
             case 2:
@@ -43,7 +53,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
                 }
 
-                int codigoRemover;
+                unsigned int codigoRemover;
                 int indiceEncontrado = -1; // significa que não achou nada.
 
                 printf("Indique o código do cliente para ser removido: \n");
@@ -74,6 +84,8 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
                     printf("Cliente removido com sucesso!\n");
 
+                    persistir_clientes(lista, *qtd);
+
                 } else{
 
                     printf("Cliente não encontrado!\n");
@@ -96,7 +108,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
                     getchar();
                 }
 
-                int codigoAlterar;
+                unsigned int codigoAlterar;
                 int indiceParaAlterar = -1;
 
                 printf("Digite o código do cliente que deseja alterar: \n");
@@ -126,13 +138,13 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
                     scanf(" %[^\n]", lista[indiceParaAlterar].NomeClientes);
 
-                    char opção;
+                    char opcao;
 
                     printf("Deseja alterar o código do cliente? Digite (S/N).\n");
 
-                    scanf(" %c", &opção);
+                    scanf(" %c", &opcao);
 
-                    if(opção == 's' || opção == 'S'){
+                    if(opcao == 's' || opcao == 'S'){
 
                         printf("Digite o novo código: \n");
 
@@ -146,6 +158,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
                     }
 
                     printf("Dados alterados com sucesso!\n");
+                    persistir_clientes(lista, *qtd);
                 }
 
                 break;
@@ -203,3 +216,12 @@ void executar_modulo_clientes(Cliente *lista, int *qtd, int max) {
 
 }
 
+
+int encontrar_cliente(Cliente *lista, int qtd, unsigned int codigo) {
+    for (int i = 0; i < qtd; i++) {
+        if (lista[i].CodigoClientes == codigo) {
+            return i;  // achou
+        }
+    }
+    return -1; // não achou
+}

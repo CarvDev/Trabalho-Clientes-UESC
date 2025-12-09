@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "clientes.h"
 #include "produtos.h"
 #include "vendas.h"
@@ -92,16 +93,22 @@ void salvar_produto_item(FILE *f, void *item) {
 void salvar_venda_item(FILE *f, void *item) {
     Venda *v = (Venda *)item;
 
-    fprintf(f, "%d|%d|%.2f|%d|",
-            v->codigo_venda,
-            v->codigo_cliente,
-            v->valor_total,
-            v->total_itens
+    fprintf(f, "%u|%u|%.2f|%.2f|%.2f|%d|",
+            v->CodigoVenda,
+            v->cliente.CodigoClientes,
+            v->carrinho.PrecoTotal,
+            v->carrinho.PrecoPago,
+            v->carrinho.Troco,
+            v->carrinho.total_itens
     );
 
-    for (int i = 0; i < v->total_itens; i++) {
-        fprintf(f, "%d,%d", v->produtos[i], v->quantidades[i]);
-        if (i < v->total_itens - 1)
+    for (int i = 0; i < v->carrinho.total_itens; i++) {
+        fprintf(f, "%d,%d",
+                v->carrinho.produto[i].codigo_produto,
+                v->carrinho.Quantidade[i]
+        );
+
+        if (i < v->carrinho.total_itens - 1)
             fprintf(f, ";");
     }
 
@@ -122,8 +129,19 @@ salvar("vendas.txt",
 int carregar(const char *nome_arquivo,void *vetor,int max_itens,int tamanho_item,int (*ler_item)(const char *, void *)){
     FILE *f = fopen(nome_arquivo, "r");
     if (!f) {
-        printf("Arquivo %s não existe. Criando um novo...\n", nome_arquivo);
+        printf("Arquivo %s nao existe. Criando um novo...\n", nome_arquivo);
         return 0; // nada carregado
+    }
+
+    // verificar se o arquivo esta vazio
+    fseek(f, 0, SEEK_END);
+    long tamanho_arquivo = ftell(f);
+    fseek(f, 0, SEEK_SET);
+    
+    if (tamanho_arquivo == 0) {
+        printf("Arquivo %s esta vazio. Nenhum dado carregado.\n", nome_arquivo);
+        fclose(f);
+        return 0;
     }
 
     char linha[512];
@@ -160,11 +178,11 @@ int ler_venda_item(const char *linha, void *item) {
 
     // lê cabeçalho básico da venda
     int cabecalho_lido = sscanf(
-        linha, "%d|%d|%f|%d|",
-        &v->codigo_venda,
-        &v->codigo_cliente,
-        &v->valor_total,
-        &v->total_itens
+        linha, "%u|%u|%f|%d|",
+        &v->CodigoVenda,
+        &v->cliente.CodigoClientes,
+        &v->carrinho.PrecoTotal,
+        &v->carrinho.total_itens
     );
 
     if (cabecalho_lido != 4)
@@ -181,13 +199,13 @@ int ler_venda_item(const char *linha, void *item) {
 
     // ler pares p,q
     int i = 0;
-    while (i < v->total_itens && *ptr != '\0') {
+    while (i < v->carrinho.total_itens && *ptr != '\0') {
         int p, q;
         int lidos = sscanf(ptr, "%d,%d", &p, &q);
         if (lidos != 2) break;
 
-        v->produtos[i] = p;
-        v->quantidades[i] = q;
+        v->carrinho.produto[i].codigo_produto = p;
+        v->carrinho.Quantidade[i] = q;
         i++;
 
         ptr = strchr(ptr, ';');

@@ -9,8 +9,10 @@ typedef struct Cliente
     char NomeClientes[TAMANHO];
 
 } Cliente;
-
-void executar_modulo_clientes(Cliente *lista, int *qtd, int max);
+int encontrar_cliente(Cliente *lista, int qtd, unsigned int codigo);
+void inicializar_clientes(Cliente *lista, int *qtd, int max);
+void persistir_clientes(Cliente *lista, int qtd);
+void executar_modulo_clientes(Cliente *lista, int *qtd);
 /* 
 Esse módulo inicia um do-while, que limpa a tela, imprime o menu de clientes, 
 solicita que o usuário selecione a opção desejada, e então armazena o input

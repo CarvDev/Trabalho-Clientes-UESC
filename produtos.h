@@ -12,5 +12,11 @@ typedef struct produtos
 }Produto;
 
 void executar_modulo_produtos(); 
+void inicializar_produtos();
+void salvar_produtos();
+int buscar_indice_produto(int codigo);
+void visualizar_produtos();
+Produto *obter_produto_por_indice(int index);
+int obter_total_produtos(void);
 
 #endif
