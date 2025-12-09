@@ -15,6 +15,7 @@ typedef struct {
 
 typedef struct {
     unsigned int CodigoVenda;
+    unsigned int codigo_cliente;
     Cliente cliente;
     Carrinho carrinho;
 } Venda;

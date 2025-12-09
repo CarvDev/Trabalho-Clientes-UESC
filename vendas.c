@@ -51,7 +51,7 @@ void mensagem_finalizar_venda(){
 
     printf("PRODUTOS COMPRADOS:\n");
     for (int i = 0; i < vendas[total_vendas -1].carrinho.total_itens; i++){
-        printf("- %s | Quantidade: %d | Preço unitário: R$ %.2f\n",
+        printf("- %s | Quantidade: %d | Preco unitario: R$ %.2f\n",
             vendas[total_vendas -1].carrinho.produto[i].nome_produto,
             vendas[total_vendas -1].carrinho.Quantidade[i],
             vendas[total_vendas -1].carrinho.produto[i].preco_produto
@@ -147,6 +147,8 @@ void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
                 pagamento(venda_atual.carrinho.PrecoTotal, &venda_atual.carrinho.Troco);
 
             venda_atual.cliente = lista_clientes[codigo_valido];
+
+            venda_atual.codigo_cliente = lista_clientes[codigo_valido].CodigoClientes;
 
             finalizar_vendas(&venda_atual);
 
