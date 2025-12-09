@@ -160,7 +160,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                         scanf("%u", &novoCodigoTemp);
                         limpar_buffer();
                         if (!cliente_existe(lista, novoCodigoTemp, *qtd)) {
-                            lista[*qtd].CodigoClientes = novoCodigoTemp;
+                            lista[indiceParaAlterar].CodigoClientes = novoCodigoTemp;
                             printf("Código atualizado!\n");
                         } else printf("Já existe um outro cliente com esse código, portanto o código não foi alterado.\n");
                     }
