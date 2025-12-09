@@ -1,6 +1,5 @@
 #include "clientes.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include "auxiliar.h"
 #include "menus.h"
 
@@ -12,6 +11,16 @@ void persistir_clientes(Cliente *lista, int qtd) {
     salvar("clientes.txt", lista, qtd, sizeof(Cliente), salvar_cliente_item);
 }
 
+static int cliente_existe(Cliente *lista, unsigned int codigo, int qtd) {
+    // iteração para verificar se já existe um cliente com código informado 
+    for (int i = 0; i < qtd; i++) {
+        if (lista[i].CodigoClientes == codigo) {
+            return 1;
+        }
+    }
+    // se não existe retorna 0
+    return 0;
+}
 
 void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
@@ -28,20 +37,32 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
             case 1: {
                 // Incluir Cliente
 
+                unsigned int codigoTemp; // variável temporária para salvar o código do cliente, antes de passar para a lista                
                 printf("Insira o código do cliente: \n");
-                scanf("%u", &lista[*qtd].CodigoClientes);
+                scanf("%u", &codigoTemp);
                 limpar_buffer();
 
+                // verifica se já existe um outro cliente com esse código
+                if(cliente_existe(lista, codigoTemp, *qtd)) {
+                    printf("Já existe um cliente com esse código. Por favor tente novamente com um código diferente\n");
+                    limpar_tela(1);
+                    break;
+                }
+
+                lista[*qtd].CodigoClientes = codigoTemp;
                 printf("Insira o nome do cliente: \n");
-                scanf(" %[^\n]", lista[*qtd].NomeClientes);
+                scanf(" %s[^\n]", lista[*qtd].NomeClientes);
+                limpar_buffer();
                 persistir_clientes(lista, *qtd + 1);
                 printf("Cliente cadastrado com sucesso!\n");
+                limpar_tela(1);
                 (*qtd)++;
                 break;
             }
 
             case 2: {
                 // Excluir Cliente
+
                 if (*qtd == 0) {
                     printf("A lista está vazia! \n");
                     limpar_tela(1);
@@ -53,6 +74,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
                 printf("Indique o código do cliente para ser removido: \n");
                 scanf("%u", &codigoRemover);
+                limpar_buffer();
 
                 for(int i = 0; i < *qtd; i++){
                     if(lista[i].CodigoClientes == codigoRemover){
@@ -69,9 +91,11 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                     (*qtd)--;
 
                     printf("Cliente removido com sucesso!\n");
-
+                    limpar_tela(1);
+                    
                 } else {
                     printf("Cliente não encontrado!\n");
+                    limpar_tela(1);
                 }
 
                 break;
@@ -82,8 +106,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
                 if (*qtd == 0) {
                     printf("A lista está vazia!\n");
-                    getchar();
-                    getchar();
+                    limpar_tela(1);
                     break;
                 }
 
@@ -92,6 +115,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
                 printf("Digite o código do cliente que deseja alterar: \n");
                 scanf("%u", &codigoAlterar);
+                limpar_buffer();
 
                 for(int i = 0; i < *qtd; i++){
                     if(lista[i].CodigoClientes == codigoAlterar){
@@ -106,22 +130,26 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                     printf("Nome atual: %s\n", lista[indiceParaAlterar].NomeClientes);
                     printf("Digite o novo nome: \n");
 
-                    scanf(" %[^\n]", lista[indiceParaAlterar].NomeClientes);
-
+                    scanf(" %s[^\n]", lista[indiceParaAlterar].NomeClientes);
+                    limpar_buffer();
+                    
                     char op;
                     printf("Deseja alterar o código? (S/N): ");
                     scanf(" %c", &op);
-
+                    
                     if(op == 's' || op == 'S'){
                         printf("Digite o novo código: \n");
                         scanf("%u", &lista[indiceParaAlterar].CodigoClientes);
+                        limpar_buffer();
                         printf("Código atualizado!\n");
                     }
 
                     printf("Dados alterados com sucesso!\n");
-
+                    limpar_tela(1);
+                    
                 } else {
                     printf("Cliente não encontrado!\n");
+                    limpar_tela(1);
                 }
 
                 break;
