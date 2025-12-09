@@ -44,7 +44,9 @@ void inserir_produto() {
     }
 
     Produto p;
-    printf("\n--------------- NOVO PRODUTO ---------------\n");
+    printf("==========================================\n");
+    printf("             *  NOVO PRODUTO  *           \n");
+    printf("==========================================\n");
     
     printf("Digite o codigo: ");
     scanf("%d", &p.codigo_produto);
@@ -74,7 +76,9 @@ void inserir_produto() {
 
 void excluir_produto() {
     int codigo;
-    printf("\n--- EXCLUIR PRODUTO ---\n");
+    printf("==========================================\n");
+    printf("           *  EXCLUIR PRODUTO  *          \n");
+    printf("==========================================\n");
     printf("Digite o codigo para excluir o produto: ");
     scanf("%d", &codigo);
 
@@ -99,7 +103,9 @@ void excluir_produto() {
 
 void alterar_produto() {
     int codigo;
-    printf("\n--------------- ALTERAR PRODUTO ---------------\n");
+    printf("==========================================\n");
+    printf("           *  ALTERAR PRODUTO  *          \n");
+    printf("==========================================\n");
     printf("Digite o codigo para alterar o produto: ");
     scanf("%d", &codigo);
     limpar_buffer();
@@ -125,8 +131,10 @@ void alterar_produto() {
 
 void visualizar_produtos() {
      
-    printf("\n--------------- PRODUTOS ---------------\n");
-    
+    printf("==========================================\n");
+    printf("              *  PRODUTOS  *              \n");
+    printf("==========================================\n");
+
     if (total_produtos == 0) {
         printf("Nenhum produto cadastrado no sistema.\n");
     } else {
@@ -137,7 +145,7 @@ void visualizar_produtos() {
                    lista_produtos[i].preco_produto);
         }
     }
-    printf("-------------------------\n");
+    printf("=========================================\n");
     limpar_tela(1);
 } 
 
@@ -148,7 +156,10 @@ void executar_modulo_produtos() {
     int opcao;
     do {
         limpar_tela(0);
-        printf("\n=== GESTAO DE PRODUTOS ===\n");
+
+        printf("==========================================\n");
+        printf("          *  GESTAO DE PRODUTOS  *        \n");
+        printf("==========================================\n");
         printf("1. Inserir Produto\n");
         printf("2. Excluir Produto\n");
         printf("3. Alterar Produto\n");

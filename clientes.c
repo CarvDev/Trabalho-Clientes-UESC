@@ -27,8 +27,13 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
     int opcao;
 
     do {
-
+      
         limpar_tela(0);
+
+        printf("==========================================\n");
+        printf("          *  GESTAO DE CLIENTES  *        \n");
+        printf("==========================================\n");
+
         imprimir_menu_clientes();
         opcao = obter_opcao();
 
@@ -37,14 +42,18 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
             case 1: {
                 // Incluir Cliente
 
-                unsigned int codigoTemp; // variável temporária para salvar o código do cliente, antes de passar para a lista                
-                printf("Insira o código do cliente: \n");
+                unsigned int codigoTemp; // variável temporária para salvar o código do cliente, antes de passar para a lista 
+                printf("==========================================\n");
+                printf("            *  NOVO CLIENTE  *           \n");
+                printf("==========================================\n");
+
+                printf("Insira o codigo do cliente: \n");
                 scanf("%u", &codigoTemp);
                 limpar_buffer();
 
                 // verifica se já existe um outro cliente com esse código
                 if(cliente_existe(lista, codigoTemp, *qtd)) {
-                    printf("Já existe um cliente com esse código. Por favor tente novamente com um código diferente\n");
+                    printf("Já existe um cliente com esse codigo. Por favor tente novamente com um codigo diferente\n");
                     limpar_tela(1);
                     break;
                 }
@@ -62,9 +71,11 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
             case 2: {
                 // Excluir Cliente
-
+                printf("==========================================\n");
+                printf("            *  EXCLUIR CLIENTE  *         \n");
+                printf("==========================================\n");
                 if (*qtd == 0) {
-                    printf("A lista está vazia! \n");
+                    printf("A lista esta vazia! \n");
                     limpar_tela(1);
                     break;
                 }
@@ -72,7 +83,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                 unsigned int codigoRemover;
                 int indiceEncontrado = -1;
 
-                printf("Indique o código do cliente para ser removido: \n");
+                printf("Indique o codigo do cliente para ser removido: \n");
                 scanf("%u", &codigoRemover);
                 limpar_buffer();
 
@@ -94,7 +105,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                     limpar_tela(1);
                     
                 } else {
-                    printf("Cliente não encontrado!\n");
+                    printf("Cliente nao encontrado!\n");
                     limpar_tela(1);
                 }
 
@@ -103,9 +114,13 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
             case 3: {
                 // Alterar Cliente
+                printf("==========================================\n");
+                printf("           *  ALTERAR CLIENTE  *          \n");
+                printf("==========================================\n");
+
 
                 if (*qtd == 0) {
-                    printf("A lista está vazia!\n");
+                    printf("A lista esta vazia!\n");
                     limpar_tela(1);
                     break;
                 }
@@ -113,7 +128,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                 unsigned int codigoAlterar;
                 int indiceParaAlterar = -1;
 
-                printf("Digite o código do cliente que deseja alterar: \n");
+                printf("Digite o codigo do cliente que deseja alterar: \n");
                 scanf("%u", &codigoAlterar);
                 limpar_buffer();
 
@@ -134,21 +149,21 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                     limpar_buffer();
                     
                     char op;
-                    printf("Deseja alterar o código? (S/N): ");
+                    printf("Deseja alterar o codigo? (S/N): ");
                     scanf(" %c", &op);
                     
                     if(op == 's' || op == 'S'){
-                        printf("Digite o novo código: \n");
+                        printf("Digite o novo codigo: \n");
                         scanf("%u", &lista[indiceParaAlterar].CodigoClientes);
                         limpar_buffer();
-                        printf("Código atualizado!\n");
+                        printf("Codigo atualizado!\n");
                     }
 
                     printf("Dados alterados com sucesso!\n");
                     limpar_tela(1);
                     
                 } else {
-                    printf("Cliente não encontrado!\n");
+                    printf("Cliente nao encontrado!\n");
                     limpar_tela(1);
                 }
 
@@ -159,13 +174,15 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                 // MOSTRAR LISTA
 
                 limpar_tela(0);
-                printf("========= LISTAGEM DE CLIENTES =========\n\n");
+                printf("===========================================\n");
+                printf("               *  CLIENTES  *              \n");
+                printf("===========================================\n");
 
                 if (*qtd == 0) {
                     printf("Nenhum cliente cadastrado.\n");
                 } else {
                     printf("%-10s | %s\n", "CODIGO", "NOME DO CLIENTE");
-                    printf("--------------------------------------------\n");
+                    printf("===========================================\n");
 
                     for (int i = 0; i < *qtd; i++) {
                         printf("%-10u | %s\n",
@@ -174,7 +191,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                     }
                 }
 
-                printf("\n========================================\n");
+                printf("\n===========================================\n");
                 printf("Pressione ENTER para voltar ao menu...");
                 limpar_tela(1);
 
@@ -187,7 +204,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                 break;
 
             default:
-                printf("[Opção inválida] Tente novamente...\n");
+                printf("[Opção invalida] Tente novamente...\n");
                 limpar_tela(1);
                 break;
         }
