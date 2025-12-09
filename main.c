@@ -42,7 +42,7 @@ int main(void) {
                 break;
             case 3:
                 // Venda
-                executar_modulo_vendas(lista_clientes, &qtd_clientes);
+                menu_vendas(lista_clientes, &qtd_clientes);
                 break;
             case 4:
                 // Sair do Sistema — salvar dados antes de encerrar
