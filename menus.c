@@ -14,7 +14,7 @@ void imprimir_menu_principal() {
 }
 
 void imprimir_menu_clientes() {
-    printf("Digite a opção desejada:\n"
+    printf("Digite a opcao desejada:\n"
     "1. Incluir Cliente\n"
     "2. Excluir Cliente\n"
     "3. Alterar Cliente\n"
