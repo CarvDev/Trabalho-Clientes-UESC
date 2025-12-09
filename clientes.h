@@ -1,12 +1,12 @@
 #ifndef CLIENTES_H
 #define CLIENTES_H
-#define TAMANHO 30
+#define TAMANHO_NOME 30
 
 typedef struct Cliente
 {
     
     unsigned int CodigoClientes;
-    char NomeClientes[TAMANHO];
+    char NomeClientes[TAMANHO_NOME];
 
 } Cliente;
 int encontrar_cliente(Cliente *lista, int qtd, unsigned int codigo);
