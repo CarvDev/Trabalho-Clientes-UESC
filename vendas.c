@@ -29,10 +29,12 @@ float pagamento(float valor_total, float *troco){
     printf("O valor total da compra é R$ %.2f\n", valor_total);
     printf("Digite o valor pago pelo cliente: R$ ");
     scanf("%f", &valor_pago);
+    limpar_buffer();
 
     while (valor_pago < valor_total){
         printf("Valor insuficiente! Por favor, insira um valor igual ou maior que R$ %.2f\n", valor_total);
         scanf("%f", &valor_pago);
+        limpar_buffer();
     }
 
     *troco = valor_pago - valor_total;
@@ -94,10 +96,10 @@ void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
         
         if (scanf("%u", &codigo_cliente_dado) != 1) {
             printf("Entrada invalida! Digite um numero valido.\n");
-            limpar_buffer();
             limpar_tela(1);
         }
-
+        
+        limpar_buffer();
         codigo_valido = encontrar_cliente(lista_clientes, *qtd_clientes, codigo_cliente_dado);
 
         if(codigo_valido == -1){
@@ -131,6 +133,7 @@ void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
         // pedir produto
         printf("\nDigite o codigo do produto para adicionar (ou -1 para finalizar): ");
         scanf("%d", &pedido);
+        limpar_buffer();
 
         if (pedido == -1){
             if (venda_atual.carrinho.total_itens == 0){
@@ -163,6 +166,7 @@ void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
 
         printf("Digite a quantidade: ");
         scanf("%d", &quantidade_produto);
+        limpar_buffer();
 
         // adicionar ao carrinho
         int i = venda_atual.carrinho.total_itens;
@@ -203,11 +207,12 @@ void menu_vendas(Cliente *lista_clientes, int *qtd_clientes) {
         printf("3. Retornar ao menu principal\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
+        limpar_buffer();
 
         switch (opcao) {
             case 1:
                 executar_modulo_vendas(lista_clientes, qtd_clientes);
-                limpar_tela(1);
+                // limpar_tela(1);
                 break;
             case 2:
                 // Visualizar vendas realizadas
