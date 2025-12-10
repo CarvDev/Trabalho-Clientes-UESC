@@ -42,4 +42,7 @@ void visualizar_vendas(void);
 /* Menu do módulo de vendas */
 void menu_vendas(Cliente *lista_clientes, int *qtd_clientes);
 
+/* Excluir uma venda pelo ID */
+void excluir_venda(void);
+
 #endif

@@ -66,7 +66,7 @@ void mensagem_finalizar_venda(){
 
 void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
 {
-    
+    limpar_tela(0);
     // verificar se há clientes cadastrados
     if (*qtd_clientes == 0) {
         printf("Nenhum cliente cadastrado no sistema!\n");
@@ -186,6 +186,12 @@ void executar_modulo_vendas(Cliente *lista_clientes, int *qtd_clientes)
 }
 
 void visualizar_vendas() {
+    limpar_tela(0);
+    if (total_vendas == 0) {
+        printf("Nenhuma venda cadastrada no sistema!\n");
+        limpar_tela(1);
+        return;
+    }
     printf("\n=======================================\n");
     printf("          LISTA DE VENDAS REALIZADAS          \n");
     printf("=======================================\n\n");
@@ -199,14 +205,65 @@ void visualizar_vendas() {
     limpar_tela(1);
 }
 
+void excluir_venda(void) {
+    limpar_tela(0);
+    if (total_vendas == 0) {
+        printf("Nenhuma venda cadastrada no sistema!\n");
+        limpar_tela(1);
+        return;
+    }
+
+    unsigned int id;
+    printf("Digite o ID da venda a ser excluida: ");
+    if (scanf("%u", &id) != 1) {
+        printf("Entrada invalida!\n");
+        limpar_buffer();
+        limpar_tela(1);
+        return;
+    }
+    limpar_buffer();
+
+    int indice = -1;
+    for (int i = 0; i < total_vendas; i++) {
+        if (vendas[i].CodigoVenda == id) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("Venda com ID %u nao encontrada.\n", id);
+        limpar_tela(1);
+        return;
+    }
+
+    for (int i = indice; i < total_vendas - 1; i++) {
+        vendas[i] = vendas[i + 1];
+        vendas[i].CodigoVenda = i; 
+    }
+
+    total_vendas--;
+    
+    if (total_vendas > 0) {
+        vendas[total_vendas - 1].CodigoVenda = total_vendas - 1;
+    }
+
+    salvar_vendas();
+    printf("Venda %u removida com sucesso.\n", id);
+    limpar_tela(1);
+}
+
 void menu_vendas(Cliente *lista_clientes, int *qtd_clientes) {
     int opcao;
     do {
         limpar_tela(0);
-        printf("=== MODULO DE VENDAS ===\n");
+        printf("==========================================\n");
+        printf("          *  MODULO DE VENDAS  *        \n");
+        printf("==========================================\n");
         printf("1. Realizar nova venda\n");
         printf("2. Visualizar vendas realizadas\n");
-        printf("3. Retornar ao menu principal\n");
+        printf("3. Excluir venda\n");
+        printf("4. Retornar ao menu principal\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
         limpar_buffer();
@@ -221,6 +278,10 @@ void menu_vendas(Cliente *lista_clientes, int *qtd_clientes) {
                 visualizar_vendas();
                 break;
             case 3:
+                // Excluir venda
+                excluir_venda();
+                break;
+            case 4:
                 // Retornar ao menu principal
                 printf("Retornando ao menu principal...\n");
                 limpar_tela(1);
@@ -230,5 +291,5 @@ void menu_vendas(Cliente *lista_clientes, int *qtd_clientes) {
                 limpar_tela(1);
                 break;
         }
-    } while (opcao != 3);
+    } while (opcao != 4);
 }

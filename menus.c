@@ -5,6 +5,9 @@
 
 // os menus abaixo precisam ser reformatados para estar de acordo com o modelo que professor mandou
 void imprimir_menu_principal() {
+    printf("==========================================\n");
+    printf("                *  LOJINHA  *        \n");
+    printf("==========================================\n");
     printf("Digite a opcao desejada:\n"
         " 1. Cadastro de Clientes\n"
         " 2. Cadastro de Produtos\n"

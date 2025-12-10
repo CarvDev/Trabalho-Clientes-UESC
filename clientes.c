@@ -41,7 +41,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
             case 1: {
                 // Incluir Cliente
-
+                limpar_tela(0);
                 unsigned int codigoTemp; // variável temporária para salvar o código do cliente, antes de passar para a lista 
                 printf("==========================================\n");
                 printf("            *  NOVO CLIENTE  *           \n");
@@ -71,6 +71,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
             
             case 2: {
                 // Excluir Cliente
+                limpar_tela(0);
                 printf("==========================================\n");
                 printf("            *  EXCLUIR CLIENTE  *         \n");
                 printf("==========================================\n");                
@@ -115,6 +116,7 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
 
             case 3: {
                 // Alterar Cliente
+                limpar_tela(0);
                 printf("==========================================\n");
                 printf("           *  ALTERAR CLIENTE  *          \n");
                 printf("==========================================\n");
@@ -198,7 +200,6 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                 }
 
                 printf("\n===========================================\n");
-                printf("Pressione ENTER para voltar ao menu...");
                 limpar_tela(1);
 
                 break;

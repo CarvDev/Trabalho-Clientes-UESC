@@ -37,6 +37,7 @@ void salvar_produtos() {
 }
 
 void inserir_produto() {
+    limpar_tela(0);
     if (total_produtos >= Maximo_Produto) {
         printf("\nErro: Capacidade maxima de produtos atingida\n");
         limpar_tela(1);
@@ -75,6 +76,7 @@ void inserir_produto() {
 }
 
 void excluir_produto() {
+    limpar_tela(0);
     if (total_produtos == 0) {
         printf("Nenhum produto cadastrado no sistema.\n");
         limpar_tela(1);
@@ -108,6 +110,7 @@ void excluir_produto() {
 }
 
 void alterar_produto() {
+    limpar_tela(0);
     if (total_produtos == 0) {
         printf("Nenhum produto cadastrado no sistema.\n");
         limpar_tela(1);
@@ -143,7 +146,7 @@ void alterar_produto() {
 }
 
 void visualizar_produtos() {
-     
+    limpar_tela(0);
     printf("==========================================\n");
     printf("              *  PRODUTOS  *              \n");
     printf("==========================================\n");
@@ -193,6 +196,7 @@ void executar_modulo_produtos() {
                 break;
             case 4:
                 visualizar_produtos();
+                limpar_tela(1);
                 break;
             case 5:
                 break;

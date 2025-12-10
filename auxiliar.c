@@ -45,25 +45,6 @@ int obter_opcao() {
     return opc; // Retorna a opção selecionada
 }
 
-void listar_algo(const char *arquivo,const char *oqseralistado) {
-    FILE *f = fopen(arquivo, "r");
-    if (!f) {
-        printf("Erro ao abrir o arquivo %s\n", arquivo);
-        return;
-    }
-
-    char linha[256];
-    printf("\n=======================================\n");
-    printf("          CADASTRO DE %s\n",oqseralistado);
-    printf("\n=======================================\n\n");
-
-
-    while (fgets(linha, sizeof(linha), f) != NULL) {
-        printf("- %s", linha);
-    }
-
-    fclose(f);
-}
 
 void salvar(const char *nome_arquivo, void *vetor,int total,int tamanho_item,void (*salvar_item)(FILE *, void *))
 {
