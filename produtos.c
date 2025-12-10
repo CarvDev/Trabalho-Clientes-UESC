@@ -65,6 +65,7 @@ void inserir_produto() {
 
     printf("Digite o preco: ");
     scanf("%f", &p.preco_produto);
+    limpar_buffer();
 
     lista_produtos[total_produtos] = p;
     total_produtos++;
