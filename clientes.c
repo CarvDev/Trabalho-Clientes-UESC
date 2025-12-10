@@ -1,8 +1,17 @@
-    #include "clientes.h"
+#include "clientes.h"
 #include <stdio.h>
 #include <string.h>
 #include "auxiliar.h"
-#include "menus.h"
+
+void imprimir_menu_clientes() {
+    printf("Digite a opcao desejada:\n"
+    "1. Incluir Cliente\n"
+    "2. Excluir Cliente\n"
+    "3. Alterar Cliente\n"
+    "4. Mostrar Cadastro de Clientes\n"
+    "5. Retornar\n"
+    );
+}
 
 void inicializar_clientes(Cliente *lista, int *qtd, int max) {
     *qtd = carregar("clientes.txt", lista, max, sizeof(Cliente), ler_cliente_item);

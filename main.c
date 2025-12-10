@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
 #include "clientes.h"
-#include "menus.h"
 #include "auxiliar.h"
 #include "produtos.h"
 #include "vendas.h"
@@ -28,7 +27,15 @@ int main(void) {
     // iniciando interação com o usuário:
     do {
         limpar_tela(0);
-        imprimir_menu_principal();
+        printf("==========================================\n");
+        printf("                *  LOJINHA  *        \n");
+        printf("==========================================\n");
+        printf("Digite a opcao desejada:\n"
+            " 1. Cadastro de Clientes\n"
+            " 2. Cadastro de Produtos\n"
+            " 3. Venda\n"
+            " 4. Sair do Sistema\n"
+        );
         opcao = obter_opcao();
         switch (opcao)
         {
