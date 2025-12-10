@@ -9,6 +9,7 @@ typedef struct Cliente
     char NomeClientes[TAMANHO_NOME];
 
 } Cliente;
+void imprimir_menu_clientes();
 int encontrar_cliente(Cliente *lista, int qtd, unsigned int codigo);
 void inicializar_clientes(Cliente *lista, int *qtd, int max);
 void persistir_clientes(Cliente *lista, int qtd);
