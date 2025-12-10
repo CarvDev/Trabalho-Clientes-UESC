@@ -193,6 +193,7 @@ void executar_modulo_produtos() {
                 break;
             case 4:
                 visualizar_produtos();
+                limpar_tela(1);
                 break;
             case 5:
                 break;
