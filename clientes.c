@@ -1,5 +1,6 @@
     #include "clientes.h"
 #include <stdio.h>
+#include <string.h>
 #include "auxiliar.h"
 #include "menus.h"
 
@@ -61,6 +62,9 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                 lista[*qtd].CodigoClientes = codigoTemp;
                 printf("Insira o nome do cliente: \n");
                 fgets(lista[*qtd].NomeClientes, TAMANHO_NOME, stdin);
+                size_t len = strlen(lista[*qtd].NomeClientes);
+                if (len > 0 && lista[*qtd].NomeClientes[len - 1] == '\n')
+                    lista[*qtd].NomeClientes[len - 1] = '\0';
                 printf("Cliente cadastrado com sucesso!\n");
                 limpar_tela(1);
                 (*qtd)++;
@@ -149,6 +153,9 @@ void executar_modulo_clientes(Cliente *lista, int *qtd) {
                     printf("Digite o novo nome: \n");
                     
                     fgets(lista[indiceParaAlterar].NomeClientes, TAMANHO_NOME, stdin);
+                    size_t len2 = strlen(lista[indiceParaAlterar].NomeClientes);
+                    if (len2 > 0 && lista[indiceParaAlterar].NomeClientes[len2 - 1] == '\n')
+                        lista[indiceParaAlterar].NomeClientes[len2 - 1] = '\0';
                     
                     printf("Nome atualizado!\n");
 

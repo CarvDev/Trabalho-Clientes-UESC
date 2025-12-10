@@ -23,7 +23,7 @@ int main(void) {
     // carregar dados salvos
     inicializar_clientes(lista_clientes, &qtd_clientes, MAX_CLIENTES);
     inicializar_produtos();
-    inicializar_vendas();
+    inicializar_vendas(lista_clientes, qtd_clientes);
 
     // iniciando interação com o usuário:
     do {

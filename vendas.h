@@ -21,7 +21,7 @@ typedef struct {
 } Venda;
 
 /* Inicializar e persistir vendas em arquivo */
-void inicializar_vendas(void);
+void inicializar_vendas(Cliente *lista_clientes, int qtd_clientes);
 void salvar_vendas(void);
 
 /* Finalizar uma venda e adicionar ao registro */
@@ -44,5 +44,8 @@ void menu_vendas(Cliente *lista_clientes, int *qtd_clientes);
 
 /* Excluir uma venda pelo ID */
 void excluir_venda(void);
+
+/* Mostrar nota fiscal de uma venda escolhida pelo usuário */
+void mostrar_nota_fiscal(void);
 
 #endif

@@ -157,41 +157,42 @@ int ler_produto_item(const char *linha, void *item) {
 int ler_venda_item(const char *linha, void *item) {
     Venda *v = (Venda *)item;
 
-    // lê cabeçalho básico da venda
+    /* Ler cabeçalho: CodigoVenda|CodigoCliente|PrecoTotal|PrecoPago|Troco|total_itens| */
     int cabecalho_lido = sscanf(
-        linha, "%u|%u|%f|%d|",
+        linha, "%u|%u|%f|%f|%f|%d|",
         &v->CodigoVenda,
         &v->cliente.CodigoClientes,
         &v->carrinho.PrecoTotal,
+        &v->carrinho.PrecoPago,
+        &v->carrinho.Troco,
         &v->carrinho.total_itens
     );
 
-    if (cabecalho_lido != 4)
+    if (cabecalho_lido != 6)
         return 0;
 
-    // agora localizar a parte de produtos
-    const char *ptr = strchr(linha, '|');
-    ptr = strchr(ptr + 1, '|');
-    ptr = strchr(ptr + 1, '|');
-    ptr = strchr(ptr + 1, '|');
+    /* localizar início da lista de produtos (após 6º '|') */
+    const char *ptr = linha;
+    for (int k = 0; k < 6; k++) {
+        ptr = strchr(ptr, '|');
+        if (!ptr) return 0;
+        ptr++;
+    }
 
-    if (!ptr) return 0;
-    ptr++; // pular '|'
-
-    // ler pares p,q
+    /* ler pares produto,quantidade separados por ';' */
     int i = 0;
-    while (i < v->carrinho.total_itens && *ptr != '\0') {
-        int p, q;
-        int lidos = sscanf(ptr, "%d,%d", &p, &q);
+    while (i < v->carrinho.total_itens && *ptr != '\0' && *ptr != '\n') {
+        int codigo_produto, quantidade;
+        int lidos = sscanf(ptr, "%d,%d", &codigo_produto, &quantidade);
         if (lidos != 2) break;
 
-        v->carrinho.produto[i].codigo_produto = p;
-        v->carrinho.Quantidade[i] = q;
+        v->carrinho.produto[i].codigo_produto = codigo_produto;
+        v->carrinho.Quantidade[i] = quantidade;
         i++;
 
-        ptr = strchr(ptr, ';');
-        if (!ptr) break;
-        ptr++; // pular ';'
+        const char *sep = strchr(ptr, ';');
+        if (!sep) break;
+        ptr = sep + 1;
     }
 
     return 1;

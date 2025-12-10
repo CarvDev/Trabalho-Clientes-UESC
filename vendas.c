@@ -9,8 +9,32 @@
 static Venda vendas[MAX_VENDAS];
 static int total_vendas = 0;
 
-void inicializar_vendas(void) {
+void inicializar_vendas(Cliente *lista_clientes, int qtd_clientes) {
     total_vendas = carregar("vendas.txt", vendas, MAX_VENDAS, sizeof(Venda), ler_venda_item);
+    /* garantir que os IDs comecem em 1 e sejam sequenciais e preencher nome do cliente */
+    for (int i = 0; i < total_vendas; i++) {
+        vendas[i].CodigoVenda = i + 1;
+        int idx = encontrar_cliente(lista_clientes, qtd_clientes, vendas[i].cliente.CodigoClientes);
+        if (idx != -1) {
+            vendas[i].cliente = lista_clientes[idx];
+        } else {
+            vendas[i].cliente.NomeClientes[0] = '\0';
+        }
+        /* preencher dados dos produtos (nome e preco) a partir do codigo */
+        for (int j = 0; j < vendas[i].carrinho.total_itens; j++) {
+            int codigo = vendas[i].carrinho.produto[j].codigo_produto;
+            int pidx = buscar_indice_produto(codigo);
+            if (pidx != -1) {
+                Produto *pp = obter_produto_por_indice(pidx);
+                if (pp != NULL) {
+                    vendas[i].carrinho.produto[j] = *pp;
+                }
+            } else {
+                vendas[i].carrinho.produto[j].nome_produto[0] = '\0';
+                vendas[i].carrinho.produto[j].preco_produto = 0.0f;
+            }
+        }
+    }
 }
 
 void salvar_vendas(void) {
@@ -19,9 +43,9 @@ void salvar_vendas(void) {
 
 void finalizar_vendas(Venda *venda){
     vendas[total_vendas] = *venda;
-    vendas[total_vendas].CodigoVenda = total_vendas;
-    salvar_vendas();
+    vendas[total_vendas].CodigoVenda = total_vendas + 1; /* ids iniciam em 1 */
     total_vendas++;
+    salvar_vendas();
 }
 
 float pagamento(float valor_total, float *troco){
@@ -237,19 +261,77 @@ void excluir_venda(void) {
         return;
     }
 
+
     for (int i = indice; i < total_vendas - 1; i++) {
         vendas[i] = vendas[i + 1];
-        vendas[i].CodigoVenda = i; 
+        vendas[i].CodigoVenda = i + 1; 
     }
 
     total_vendas--;
-    
+
     if (total_vendas > 0) {
-        vendas[total_vendas - 1].CodigoVenda = total_vendas - 1;
+        vendas[total_vendas - 1].CodigoVenda = total_vendas;
     }
 
     salvar_vendas();
     printf("Venda %u removida com sucesso.\n", id);
+    limpar_tela(1);
+}
+
+void mostrar_nota_fiscal(void) {
+    limpar_tela(0);
+    if (total_vendas == 0) {
+        printf("Nenhuma venda cadastrada no sistema!\n");
+        limpar_tela(1);
+        return;
+    }
+
+    unsigned int id;
+    printf("Digite o ID da venda para visualizar a nota fiscal: ");
+    if (scanf("%u", &id) != 1) {
+        printf("Entrada invalida!\n");
+        limpar_buffer();
+        limpar_tela(1);
+        return;
+    }
+    limpar_buffer();
+
+    int indice = -1;
+    for (int i = 0; i < total_vendas; i++) {
+        if (vendas[i].CodigoVenda == id) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) {
+        printf("Venda com ID %u nao encontrada.\n", id);
+        limpar_tela(1);
+        return;
+    }
+
+    Venda *v = &vendas[indice];
+
+    printf("\n========================================\n");
+    printf("              NOTA FISCAL\n");
+    printf("========================================\n");
+    printf("Venda ID: %u\n", v->CodigoVenda);
+    printf("Cliente: %s\n", v->cliente.NomeClientes);
+    printf("\nProdutos:\n");
+
+    printf("%-4s %-30s %-10s %-10s %-10s\n", "#", "Nome", "Qtd", "Preco", "Subtotal");
+    for (int i = 0; i < v->carrinho.total_itens; i++) {
+        Produto *p = &v->carrinho.produto[i];
+        int qtd = v->carrinho.Quantidade[i];
+        float subtotal = p->preco_produto * qtd;
+        printf("%-4d %-30s %-10d R$ %-8.2f R$ %-8.2f\n", i + 1, p->nome_produto, qtd, p->preco_produto, subtotal);
+    }
+
+    printf("\nTotal: R$ %.2f\n", v->carrinho.PrecoTotal);
+    printf("Valor pago: R$ %.2f\n", v->carrinho.PrecoPago);
+    printf("Troco: R$ %.2f\n", v->carrinho.Troco);
+    printf("========================================\n\n");
+
     limpar_tela(1);
 }
 
@@ -262,8 +344,9 @@ void menu_vendas(Cliente *lista_clientes, int *qtd_clientes) {
         printf("==========================================\n");
         printf("1. Realizar nova venda\n");
         printf("2. Visualizar vendas realizadas\n");
-        printf("3. Excluir venda\n");
-        printf("4. Retornar ao menu principal\n");
+        printf("3. Ver nota fiscal\n");
+        printf("4. Excluir venda\n");
+        printf("5. Retornar ao menu principal\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
         limpar_buffer();
@@ -274,15 +357,15 @@ void menu_vendas(Cliente *lista_clientes, int *qtd_clientes) {
                 // limpar_tela(1);
                 break;
             case 2:
-                // Visualizar vendas realizadas
                 visualizar_vendas();
                 break;
             case 3:
-                // Excluir venda
-                excluir_venda();
+                mostrar_nota_fiscal();
                 break;
             case 4:
-                // Retornar ao menu principal
+                excluir_venda();
+                break;
+            case 5:
                 printf("Retornando ao menu principal...\n");
                 limpar_tela(1);
                 break;
@@ -291,5 +374,5 @@ void menu_vendas(Cliente *lista_clientes, int *qtd_clientes) {
                 limpar_tela(1);
                 break;
         }
-    } while (opcao != 4);
+    } while (opcao != 5);
 }
